@@ -1,0 +1,6 @@
+streamlit
+python-dotenv
+google-generativeai
+nba_api
+boto3
+grpcio==1.58.0
