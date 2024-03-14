@@ -3,4 +3,5 @@ python-dotenv
 google-generativeai
 nba_api
 boto3
-grpcio==1.58.0
+psycopg2
+grpcio==1.49.0

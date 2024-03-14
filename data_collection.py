@@ -4,10 +4,8 @@ import json
 from dotenv import load_dotenv
 import os
 
-def configure():
-    load_dotenv()
+load_dotenv()
 
-configure()
 
 
 # Step 1: Retrieve career player statistics for every active player
@@ -30,6 +28,7 @@ for index, player_row in active_players_data.iterrows():
        career_stats1 = career_stats[0]
        career_stats1['PERSON_ID'] = player_id
        career_stats1['PLAYER_NAME'] = player_name
+       del career_stats1['LEAGUE_ID']
   
        all_players_career_stats.append(career_stats1)
 
@@ -40,11 +39,11 @@ career_stats_json = json.dumps(all_players_career_stats)
 
 # Step 3: Upload the data to an Amazon S3 bucket
 session = boto3.Session(
-     region_name = 'us-east-2',
+     region_name = 'us-east-1',
      aws_access_key_id=os.getenv('api_key'),
      aws_secret_access_key=os.getenv('api_secret'))
 s3 = session.resource('s3')
-bucket_name = 'text2sqlag'
+bucket_name = 'text2sql2'
 file_name = 'career_stats.json'
 
 
