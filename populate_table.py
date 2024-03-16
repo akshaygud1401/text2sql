@@ -30,7 +30,7 @@ def data_cleaning(cur, conn):
     cur = cur
     cur.execute('ALTER TABLE careerstats DROP COLUMN team_id, DROP COLUMN person_id')
     #alter_col_types(cur, conn)
-    #This deletes duplicate entries that occur from running the file more than once, and keeps the latest values inserted 
+    #This deletes duplicate entries that occur, and keeps the latest values inserted 
     cur.execute('DELETE FROM careerstats a USING careerstats b WHERE b.player_id = a.player_id and b.ctid < a.ctid;')
 
 def main():
