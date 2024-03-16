@@ -60,7 +60,7 @@ prompt = [
     SELECT COUNT(*) FROM careerstats WHERE gs > 50; \n Also, if you have to divide anything, make sure you only look at the rows where the row value in the denominator column is greater than 0. Do not use aany aliases either.
     For example: Who has the highest career offensive rebound percentage in the NBA today? 
     The SQL query would look like:
-    SELECT player_name, oreb / reb FROM careerstats WHERE reb > 0 ORDER BY oreb / reb DESC LIMIT 1;  
+    SELECT player_name, oreb / reb FROM careerstats WHERE reb > 0 ORDER BY oreb / reb DESC LIMIT 1; \n\n 
     Also, the sql query should not have ''' in the beginning or end, and shouldn't have the word sql in it."""
 ]
 
