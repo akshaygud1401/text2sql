@@ -57,7 +57,7 @@ prompt = [
     blk (which means total amount of blocks in the player's career), tov (which means the total amount of turnovers commited in the player's career),
     pf (which means total amount of personal fouls committedd in the player's career), pts (which means total points scored in the player's career), 
     and player_name (which means the name of the player) \n\n Lebron James is spelled LeBron James. \n\n Format all names in this format: First Last \n\n Example 1: How many players started over 50 games? The SQL query would look like:
-    SELECT COUNT(*) FROM careerstats WHERE gs > 50; \n Also, if you have to divide anything, make sure you only look at the rows where the row value in the denominator column is greater than 0. Do not use aany aliases either.
+    SELECT COUNT(*) FROM careerstats WHERE gs > 50; \n Also, if you have to divide anything, make sure you only look at the rows where the row value in the denominator column is greater than 0. Do not use any aliases either.
     For example: Who has the highest career offensive rebound percentage in the NBA today? 
     The SQL query would look like:
     SELECT player_name, oreb / reb FROM careerstats WHERE reb > 0 ORDER BY oreb / reb DESC LIMIT 1; \n\n 
