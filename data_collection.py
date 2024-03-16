@@ -30,12 +30,11 @@ for index, player_row in active_players_data.iterrows():
        career_stats1['PLAYER_NAME'] = player_name
        del career_stats1['LEAGUE_ID']
   
-       #all_players_career_stats.append(career_stats1)
-       career_stats_json = json.dumps(career_stats1)
+       all_players_career_stats.append(career_stats1)
 
 
 # Step 2: Convert the data to JSON
-#career_stats_json = json.dumps(all_players_career_stats)
+career_stats_json = json.dumps(all_players_career_stats)
 
 
 # Step 3: Upload the data to an Amazon S3 bucket

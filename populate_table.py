@@ -1,4 +1,3 @@
-#Important: run this file only once to populate table
 import boto3
 import psycopg2
 import os

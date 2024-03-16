@@ -56,10 +56,10 @@ prompt = [
     ast (which means total amount of assists in the player's career), stl (which means the total amount of steals in the player's career),
     blk (which means total amount of blocks in the player's career), tov (which means the total amount of turnovers commited in the player's career),
     pf (which means total amount of personal fouls committedd in the player's career), pts (which means total points scored in the player's career), 
-    and player_name (which means the name of the player) \n\n Example 1: How many players started over 50 games? The SQL query would look like:
+    and player_name (which means the name of the player) \n\n Lebron James is spelled LeBron James. \n\n Format all names in this format: First Last \n\n Example 1: How many players started over 50 games? The SQL query would look like:
     SELECT COUNT(*) FROM careerstats WHERE gs > 50; \n Also, if you have to divide anything, make sure you only look at the rows where the row value in the denominator column is greater than 0. Do not use aany aliases either.
-    For example: Who has the highest career offensive rebound percentage in the NBA today? Do not write a SQL query like this: SELECT player_name, oreb / reb FROM careerstats WHERE oreb / reb > 0.25 ORDER BY oreb / reb DESC LIMIT 1.
-    Instead, The SQL query would look like:
+    For example: Who has the highest career offensive rebound percentage in the NBA today? 
+    The SQL query would look like:
     SELECT player_name, oreb / reb FROM careerstats WHERE reb > 0 ORDER BY oreb / reb DESC LIMIT 1;  
     Also, the sql query should not have ''' in the beginning or end, and shouldn't have the word sql in it."""
 ]
@@ -78,11 +78,13 @@ def chat():
     msg = request.form["msg"]
     question = msg
     response=retrieve_response(question,prompt, conversation_history)
+    #printing SQL query for debugging purposes
     print(response)
     response=retrieve_sql(response)
     output = []
     for row in response:
         row = ', '.join(str(e) for e in row)
+        #printing row for debugging purposes
         print(row)
         output.append(row)
     final = '; '.join(str(e) for e in output)
