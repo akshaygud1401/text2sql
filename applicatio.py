@@ -1,30 +1,20 @@
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, jsonify
+import streamlit as st
 import os
 import psycopg2
 import google.generativeai as genai
 
 load_dotenv()
 
+
 #Configure the API key
 genai.configure(api_key=os.getenv('genai_key'))
 
-def conversation_role(role, text):
-    return {'role': role, 'parts': [text]}
-
-def get_conversation(conversation):
-    return model.start_chat(history=conversation)
-
 #Run and collect Google Gemini Pro's response as a sql query
-def retrieve_response(usr_q, prompt, conversation_history):
-    convo = get_conversation(conversation_history)
-    response = convo.send_message([prompt[0],usr_q],stream=True)
-    conversation_history.append(conversation_role('user', usr_q))
-    final_response = ''
-    for chunk in response:
-        final_response = final_response + chunk.text
-    conversation_history.append(conversation_role('model', final_response))
-    return convo.last.text
+def retrieve_response(usr_q, prompt):
+    model = genai.GenerativeModel('gemini-pro')
+    output = model.generate_content([prompt[0],usr_q])
+    return output.text
 
 #Use LLM's sql query to get result from the Postgresql database
 def retrieve_sql(sql):
@@ -64,33 +54,26 @@ prompt = [
     Also, the sql query should not have ''' in the beginning or end, and shouldn't have the word sql in it."""
 ]
 
+#Streamlit app
 
+st.set_page_config(page_title="Text2SQL")
 
-app = Flask(__name__)
+st.header("Gemini App To Retrieve NBA Career Statistics for Active NBA Players")
 
-@app.route("/")
-def index():
-    return render_template('interface.html')
+question=st.text_input("Input: ",key="input")
+st.markdown('<span id="button-primary"></span>', unsafe_allow_html=True)
+submit=st.button("Ask me!")
 
-
-@app.route("/get", methods=["GET", "POST"])
-def chat():
-    msg = request.form["msg"]
-    question = msg
-    response=retrieve_response(question,prompt, conversation_history)
+# if submit is clicked
+if submit:
+    response=retrieve_response(question,prompt)
     print(response)
     response=retrieve_sql(response)
-    output = []
+    st.subheader("The Response is")
     for row in response:
-        row = ', '.join(str(e) for e in row)
         print(row)
-        output.append(row)
-    final = '; '.join(str(e) for e in output)
-    return final
+        st.header(', '.join(str(e) for e in row))
 
 
-if __name__ == '__main__':
-    model = genai.GenerativeModel('gemini-pro')
-    chat = model.start_chat(history=[])
-    conversation_history = []
-    app.run()
+        https://i.ibb.co/fSNP7Rz/icons8-chatgpt-512.png
+

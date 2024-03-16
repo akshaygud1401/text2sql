@@ -5,3 +5,4 @@ nba_api
 boto3
 psycopg2
 grpcio==1.49.0
+flask
